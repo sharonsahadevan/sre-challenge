@@ -63,6 +63,30 @@ To automate the Terraform changes, we can either go with Terraform cloud or clas
 
 In this solution, I am going with Terraform cloud for the simplicity, state management and easy integration with github terraform repo. 
 
+Terraform state can be stored in version enabled S3 bucket or in Terraform cloud itself. Since we decided to use terraform cloud we can store the state in the terraform cloud for the simplicity.
+
+EKS terraform module:
+
+https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest
+
+```
+module "eks" {
+  source  = "terraform-aws-modules/eks/aws"
+  version = "19.16.0"
+}
+```
+
+VPC terraform module:
+
+https://registry.terraform.io/modules/terraform-aws-modules/vpc/aws/latest
+
+```
+module "vpc" {
+  source  = "terraform-aws-modules/vpc/aws"
+  version = "5.1.2"
+}
+```
+
 ## Microservice Deployment Strategy
 
 I assume each microservice has a Dockerfile. when a new commit is pushed to the git repo, The Github action will kick in and build the micro service image and push it to the ECR registry.
@@ -82,6 +106,12 @@ The infrastructure is created with terraform so terratest is the best tool for t
 All the project configurations will be stored in git repo. sensitive data will be stored in AWS secrets manager.
 
 use of full blown configuration tools like Ansible or chef is not required unless it is absolutely necessary. In this use case we do not need a separate configuration management tool
+
+AWS Secrets manager EKS integration:
+
+https://docs.aws.amazon.com/secretsmanager/latest/userguide/integrating_csi_driver.html
+
+https://docs.aws.amazon.com/secretsmanager/latest/userguide/integrating_csi_driver.html
 
 ## Monitoring Approach
 
