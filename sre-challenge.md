@@ -71,6 +71,8 @@ Helm charts will be used to deploy the microservices to the EKS cluster using th
 
 Deployment will be done through GitOps strategy with ArgoCD.
 
+![Automation diagram!](diagram.png "Automation")
+
 ## Infrastructure Testing
 
 The infrastructure is created with terraform so terratest is the best tool for the testing.
